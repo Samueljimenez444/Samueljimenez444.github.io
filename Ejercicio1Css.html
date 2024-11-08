@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 CSS</title>
+    <style>
+        #A{
+            font-style: italic;
+text-align: right;
+        }
+        #B{
+            text-transform: uppercase;
+            text-decoration: line-through;
+        }
+        #C{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 120%   ;
+        }
+        #D{
+            text-shadow: 3px 4px 5px green;
+
+        }
+        div{
+
+            display: inline;
+            border-radius: 20px;
+       
+        
+        }
+        #div1{
+background-color: palegreen;
+height: 200px;
+width: 400px;
+
+
+        }
+        #div2{
+            height: 200px;
+            width: 400px;
+background-color: greenyellow;
+display: block;
+        }
+        #div3{
+            height: 200px;
+            width: 400px;
+background-color: palevioletred;
+        }
+        #Rojo{
+            background-color: red;
+       
+        }
+        #Verde{
+background-color: green;
+        }
+        #Azul{
+background-color: blue;
+width: 100px;
+height: 50px;
+
+        }
+        a{
+
+            color: white;
+        }
+        #contenedor {
+            display: flex; 
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicio 1 CSS</h1>
+    <p id="A">Este es el primer parrafo esta en cursiva y alineado a la derecha</p>
+    <p id="B">Este tambien es un parrafo en minusculas pero convertido en mayusculas y tachado</p>
+    <p id="C">Como no hay dos sin tres, este sera el tercero con un tipo diferente de letra pero un 20% mas grande</p>
+    <p id="D">Y por ultimo un texto en negrita y con sombra verde</p>
+<div id="contenedor">
+    <div id="div1">Buscadores: 
+      <br>
+      <a href="https://duckduckgo.com/index.html" id="Rojo">Duckduckgo</a>
+     
+      <a href="https://www.bing.com/search?pglt=41&q=google&cvid=e61cc6ec618642df8ce9570d8fcd7963&gs_lcrp=EgRlZGdlKgYIABBFGDsyBggAEEUYOzIGCAEQABhAMgYIAhAAGEAyBggDEC4YQDIGCAQQRRg7MgYIBRAuGEAyBggGEEUYPDIGCAcQRRg8MgYICBBFGDzSAQc2NzlqMGoxqAIAsAIA&FORM=ANNTA1&PC=U531" id="Verde" >Google</a>
+    
+       <a href="https://www.mozilla.org/en-US/firefox/new/" id="Azul">Firefox</a>
+    </div>
+
+    <div id="div2">Redes Sociales:
+        <br>
+        <a href="https://es-es.facebook.com/" id="Rojo">Facebook</a>
+        <br>
+      <a href="https://x.com/X" id="Verde">Twitter (X)</a> 
+      <br>
+        <a href="https://www.instagram.com/" id="Azul">Instagram</a>  
+    </div>
+    <div id="div3">Noticias:
+        <br>
+        <a href="https://elpais.com/" >Diario El Pais</a>
+    </div>
+</div>
+</body>
+</html>

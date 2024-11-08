@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 CSS</title>
+    <head> 
+        <style>
+           
+    .contenedor {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .block {
+        width: 200px;
+        height: 200px;
+        background-size: 50px 50px;
+        border: 1px solid;
+    }
+
+    .bloque-1 {
+        background-image: url('https://wakyma.com/blog/wp-content/uploads/2018/04/raccoon-2183755_1920-1024x652.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 2px solid black;
+    }
+
+    .bloque-2 {
+        background-image: url('https://wakyma.com/blog/wp-content/uploads/2018/04/raccoon-2183755_1920-1024x652.jpg');
+        background-repeat: repeat-x;
+        background-position: bottom;
+        border: 2px solid blue;
+
+    }
+
+    .bloque-3 {
+        background-image: url('https://wakyma.com/blog/wp-content/uploads/2018/04/raccoon-2183755_1920-1024x652.jpg');
+        background-repeat: repeat-y;
+        background-position: right;
+        border: 2px solid green;
+    }
+</style>
+
+</head>
+<body>
+<div class="contenedor">
+    <div class="block bloque-1"></div>
+    <div class="block bloque-2"></div>
+    <div class="block bloque-3"></div>
+</div>
+</body>
+</html>
