@@ -1,15 +1,9 @@
+.contenedor{
+    display: flex;
+    justify-content: space-between;
+}
 .imageninicio{
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    border: 2px solid black;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    width: 50%;
-    height: 50%;
-    display: flex;
-   justify-items: center;
-    margin-left: 300px;
-    margin-bottom: 20px;
+  width: 30%;
 }
 body{
 background-color: skyblue;
