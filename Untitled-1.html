@@ -1,29 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Div</title>
+    <title>Actividad 2: Divs</title>
     <style>
-        div{
-            padding: 40px 20px;
-            background-color: blue;
-            color: white;
+        .contenedor {
+            display: flex; /* Para situar los divs uno junto a otro */
+            gap: 10px; /* Espacio entre los divs */
+        }
+        .div1, .div2, .div3 {
+            width: 400px;
+            height: 200px;
+            border-radius: 15px;
+            padding: 10px;
+        }
+        .div1 {
+            background-color: lightcoral;
+        }
+        .div2 {
+            background-color: lightblue;
+        }
+        .div3 {
+            background-color: lightgreen;
+        }
+        .div1 a, .div2 a, .div3 a {
             display: inline-block;
+            width: 100px;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            margin: 5px;
         }
-        #huevosfritos{
-            background-color: red;
-            top: 20px;
-            left: 40px;
-            position: static;
+        .div1 a {
+            background-color: darkred;
         }
-
+        .div2 a {
+            background-color: darkblue;
+            display: block; /* Para que los enlaces se sitúen uno debajo del otro */
+        }
+        .div3 a {
+            background-color: darkgreen;
+            text-decoration: none; /* Sin subrayado */
+            transition: color 0.3s, font-weight 0.3s; /* Transiciones suaves */
+        }
+        .div3 a:hover {
+            color: yellow; /* Cambia de color al pasar el ratón */
+            font-weight: bold; /* Negrita al pasar el ratón */
+        }
     </style>
 </head>
 <body>
-    <div>Bloque 1</div>
-    <div id="huevosfritos">Bloque 2</div>
-    <div>Bloque 3</div>
-    
+    <div class="contenedor">
+        <div class="div1">
+            <a href="#">Enlace 1</a>
+            <a href="#">Enlace 2</a>
+            <a href="#">Enlace 3</a>
+        </div>
+        <div class="div2">
+            <a href="#">Enlace 1</a>
+            <a href="#">Enlace 2</a>
+            <a href="#">Enlace 3</a>
+        </div>
+        <div class="div3">
+            <a href="#">Enlace 1</a>
+            <a href="#">Enlace 2</a>
+            <a href="#">Enlace 3</a>
+        </div>
+    </div>
 </body>
 </html>
