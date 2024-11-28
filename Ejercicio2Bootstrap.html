@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 CSS</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Ejercicio 1 CSS</h1>
+        
+        <p class="text-right font-italic">Este es el primer párrafo, está en cursiva y alineado a la derecha</p>
+        <p class="text-uppercase text-decoration-line-through">Este también es un párrafo en minúsculas pero convertido en mayúsculas y tachado</p>
+        <p class="font-weight-normal" style="font-family: 'Times New Roman', Times, serif; font-size: 120%;">Como no hay dos sin tres, este será el tercero con un tipo diferente de letra pero un 20% más grande</p>
+        <p class="text-success" style="text-shadow: 3px 4px 5px green;">Y por último, un texto en negrita y con sombra verde</p>
+        
+        <div class="d-flex justify-content-between mt-3">
+            <div class="bg-success text-white rounded p-3" style="width: 400px; height: 200px;">
+                <strong>Buscadores:</strong>
+                <br>
+                <a href="https://duckduckgo.com/index.html" class="text-white">Duckduckgo</a><br>
+                <a href="https://www.bing.com" class="text-white">Google</a><br>
+                <a href="https://www.mozilla.org/en-US/firefox/new/" class="text-white">Firefox</a>
+            </div>
+
+            <div class="bg-warning text-dark rounded p-3" style="width: 400px; height: 200px;">
+                <strong>Redes Sociales:</strong>
+                <br>
+                <a href="https://es-es.facebook.com/" class="text-danger">Facebook</a><br>
+                <a href="https://x.com/X" class="text-success">Twitter (X)</a><br>
+                <a href="https://www.instagram.com/" class="text-primary">Instagram</a>
+            </div>
+
+            <div class="bg-danger text-white rounded p-3" style="width: 400px; height: 200px;">
+                <strong>Noticias:</strong>
+                <br>
+                <a href="https://elpais.com/" class="text-white">Diario El País</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlace a Bootstrap JS y dependencias (opcional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
