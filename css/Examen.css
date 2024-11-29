@@ -1,0 +1,133 @@
+h1{
+    text-align: center;
+    text-decoration: underline;
+    color: white;
+    text-shadow: 5px 5px 5px black;
+}
+h2{
+    text-align: center;
+    text-decoration: underline;
+    color: black;
+    text-shadow: 5px 5px 5px black;
+}
+p{
+    text-align: center;
+    font-size: large;
+    color: black;
+    text-shadow: 5px 5px 5px black;
+}
+body{
+    background-color: gray;
+    font-family: 'Times New Roman', Times, serif;
+}
+#Proyecto1{
+background-color: white;
+border-radius: 20px;
+box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+border: 2px solid black;
+
+}
+#Proyecto2{
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+   
+    }
+    #Proyecto3{
+        background-color: white;
+        border-radius: 20px;
+        border: 2px solid black;
+box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+
+        }
+        img{
+            border-radius: 20px;
+            border: 2px solid black;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            width: 50%;
+            height: 50%;
+            display: flex;
+           justify-items: center;
+            margin-left: 100px;
+           
+            
+        }
+        a:hover {
+            color: gray; 
+            text-decoration: underline; 
+        }
+        a{
+            color: black;
+          display: flex;
+          justify-content: center;
+        }
+        li{
+            display: flex;
+            justify-content: center;
+           
+        }
+        #tecnologias{
+            text-decoration: underline;
+        }
+        footer{
+            background-color: black;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        border-radius: 20px;
+        border: 2px solid black;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        header{
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid black;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+        }
+       
+        div{
+            padding: 10px;
+           
+        
+        }
+        .contenedor{
+            display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:gray;
+padding: auto;
+
+        }
+        .barra{
+            color: white;
+  text-decoration: none;
+
+        }
+        .galeria{
+            gap: 10px;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           box-shadow: inset 10px;
+           border-radius: 20px;
+           margin: auto;
+           padding: 10px;
+           font-size: large;
+         
+         
+           display: flex;
+           flex-direction: row;
+           
+           
+           
+           
+
+        }
+        #footer{
+            color: black;
+        }
