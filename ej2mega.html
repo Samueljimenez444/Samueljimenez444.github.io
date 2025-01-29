@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1 JSON</title>
+</head>
+<body>
+<form>
+    <label>Nombre</label>
+    <input id="nombre" name="nombre" type="text">
+    <label>Apellidos</label>
+    <input id="apellidos" name="apellidos" type="text">
+    <label>Edad</label>
+    <input id="edad" name="edad" type="number">
+    <label>Ciudad</label>
+    <input id="ciudad" name="ciudad" type="text">
+    <button type="button" id="enviar">Enviar</button>
+</form>
+<div id="tabla"></div>
+<div id="resultados"></div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    lista = [];
+
+    $("#enviar").click(function () {
+        let nombre = $("#nombre").val();
+        let apellidos = $("#apellidos").val();
+        let edad = $("#edad").val();
+        let ciudad = $("#ciudad").val();
+        let obj = {
+            "nombre": nombre,
+            "apellidos": apellidos,
+            "edad": edad,
+            "ciudad": ciudad
+        }
+        lista.push(obj);
+        simulacro();
+    });
+
+    function simulacro() {
+        let lista_serializada = serializar(lista);
+        let lista_NOserializada = deserializar(lista_serializada)
+        generaTabla(lista_NOserializada);
+    }
+
+    function serializar(objeto) {
+        return JSON.stringify(objeto);
+    }
+
+    function deserializar(objJson) {
+        return JSON.parse(objJson);
+    }
+
+    function creaTabla() {
+        let tabla = "<table border='1' id='tabla_datos'>" +
+            "<thead>" +
+            "<tr>" +
+            "<th>Nombre</th>" +
+            "<th>Apellidos</th>" +
+            "<th>Edad</th>" +
+            "<th>Ciudad</th>" +
+            "</tr>" +
+            "</thead>";
+        tabla += "<tbody id='cuerpo'></tbody>";
+        tabla += "</table>";
+        return tabla
+    }
+
+    function nuevafila(obj, idObjeto) {
+        return "<tr id='" + idObjeto + "' onclick='eliminarTR(this.id)'><td>" + obj.nombre + "</td><td>" + obj.apellidos + "</td><td>" + obj.edad + "</td><td>" + obj.ciudad + "</td></tr>";
+    }
+
+    function eliminarTR(idTR) {
+        lista.splice(idTR-1,1);
+        document.getElementById(idTR).remove();
+        simulacro();
+    }
+
+    function generaTabla(lista) {
+        let tabla = creaTabla();
+        $("#tabla").html(tabla);
+
+        let suma = 0;
+        let cont = 0;
+        let max = 0;
+        let min = 999;
+        console.log(lista);
+        lista.forEach(
+            function (elemento) {
+                cont++;
+                suma = suma + parseInt(elemento.edad);
+                if (elemento.edad > max) {
+                    max = elemento.edad;
+                }
+                if (elemento.edad < min) {
+                    min = elemento.edad;
+                }
+                media = suma / cont;
+                pSuma = "<p>Suma: " + suma + "</p>";
+                pMedia = "<p>Media: " + media + "</p>";
+                pMax = "<p>Max: " + max + "</p>";
+                pMin = "<p>Min: " + min + "</p>";
+                $("#resultados").html(pSuma + pMedia + pMax + pMin);
+                $("#tabla_datos").append(nuevafila(elemento, cont));
+            }
+        )
+    }
+</script>
+</body>
+</html>

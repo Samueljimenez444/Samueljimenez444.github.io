@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="jquery-3.7.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio botones</title>
+    <style>
+        #XmlS{
+        background-color: aqua;
+        }
+        #XmlE{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <button id="XmlS" onclick="solicitudXml()">Solicitud Xml</button>
+    <button id="XmlE" onclick="envio()">Envio Xml</button>
+    <button onclick="solicitud()">Solicitud JQuery</button>
+    <button onclick="envio()">Envio JQuery</button>
+    <button>E</button>
+    <button>e</button>
+</body>
+<script>
+    function solicitudXml(){
+   	const xhr = new XMLHttpRequest();
+   	xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+   	xhr.responseType = "json"; 
+   	xhr.onload = function() {
+       	if (xhr.readyState == 4 && xhr.status == 200) {
+           	const data = xhr.response;
+           	console.log(data);
+       	} else {
+           	console.log("Error: ${xhr.status}");
+       	}
+   	};
+   	xhr.send();
+}
+function envio(objeto_js){
+   	const xhr = new XMLHttpRequest();
+   	xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
+	xhr.responseType = "json"; 
+   	xhr.onload = function() {
+       	if (xhr.readyState == 4 && xhr.status == 201) { // 200 || 201
+           	console.log(xhr.response);
+       	} else {
+           	console.log("Error: ${xhr.status}");
+       	}
+   	};
+   	xhr.send(JSON.stringify(objeto_js));
+}
+function solicitud() {
+    $.get("https://jsonplaceholder.typicode.com/users")
+        .done(function(data) {
+            console.log(data);
+        })
+        .fail(function(xhr, status, error) {
+            console.log(`Error: ${xhr.status} - ${error}`);
+        });
+}
+function envio(objeto_js) {
+    $.post("https://jsonplaceholder.typicode.com/posts", 
+        JSON.stringify(objeto_js), 
+        function(response) {
+            console.log(response);
+        },
+        "json"
+    )
+    .fail(function(xhr, status, error) {
+        console.log(`Error: ${xhr.status} - ${error}`);
+    });
+}
+</script>
+</html>

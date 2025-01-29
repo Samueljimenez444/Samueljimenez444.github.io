@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        let array=[1,2,3,4,5];
+        console.log(array)
+        array[5]=20;
+        array.splice(0, 1);
+        console.log(array)
+        for(let i=0;i<array.length;i++){
+            console.log(array[i])
+        }
+        function comparar(array){
+            let numero=array[0];
+            for(let i=0;i<array.length;i++)
+        if(array[i]>numero){
+            numero=array[i];
+        }
+        return numero;
+        
+        }
+        console.log(comparar(array))
+        let persona = { nombre: "Juan", edad: 30, ciudad: "Madrid"}
+        console.log(persona)
+        persona.propiedad="ocupacion";
+        delete persona.ciudad;
+        console.log(persona)
+        function objeto(persona){
+    
+        }
+        document.getElementById("miBoton").addEventListener("click"), 
+        function() { this.classList.toggle("cambiado"); };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body>
+    <button id="pulsar" style="background-color: green; color: white;">Pulsame</button>
+</body>
+</html>
