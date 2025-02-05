@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Información del Equipo</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .team-info {
+            margin-top: 20px;
+        }
+        .team-logo {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Información del Equipo de la Premier League</h1>
+    <label for="team-select">Selecciona un equipo:</label>
+    <select id="team-select" multiple>
+        <option value="">--Selecciona un equipo--</option>
+        <option value="Chelsea">Chelsea</option>
+        <option value="Arsenal">Arsenal</option>
+        <option value="Manchester United">Manchester United</option>
+        <option value="Manchester City">Manchester City</option>
+        
+    </select>
+
+    <div class="team-info" id="team-info"></div>
+
+    <script>
+        document.getElementById('team-select').addEventListener('change', function() {
+            const teamName = this.value;
+            if (teamName) {
+                fetch(`https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${teamName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const team = data.teams[0];
+                        const teamInfoDiv = document.getElementById('team-info');
+                        teamInfoDiv.innerHTML = `
+                            <h2>${team.strTeam}</h2>
+                            <img src="${team.strBadge}" alt="Logotipo de ${team.strTeam}" class="team-logo">
+                            <p><strong>Año de Fundación:</strong> ${team.intFormedYear}</p>
+                            <p><strong>Estadio:</strong> ${team.strStadium}</p>
+                            <p><strong>Descripción:</strong> ${team.strDescriptionES || team.strDescriptionEN}</p>
+                            
+                        `;
+                    })
+                
+            }
+        });
+
+    </script>
+</body>
+</html>

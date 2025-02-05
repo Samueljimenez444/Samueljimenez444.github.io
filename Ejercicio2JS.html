@@ -60,8 +60,8 @@
 </table>
 
 <script>
-    let registros = []; // Array para almacenar los registros
-    let idCounter = 1; // Contador para asignar IDs únicos
+    let registros = []; 
+    let idCounter = 1; 
 
     $(document).ready(function() {
         $('#formulario').on('submit', function(event) {
@@ -89,7 +89,7 @@
                 return;
             }
 
-            // Crear un nuevo registro
+            
             const nuevoRegistro = {
                 id: idCounter++,
                 nombre: nombre,
@@ -98,19 +98,18 @@
                 edad: edad
             };
 
-            // Agregar el nuevo registro al array
+            
             registros.push(nuevoRegistro);
-            generaTabla(); // Generar la tabla
+            generaTabla(); 
 
-            $('#formulario')[0].reset(); // Resetear el formulario
+            $('#formulario')[0].reset(); 
         });
     });
 
     function generaTabla() {
         const tbody = $('#tabladatos tbody');
-        tbody.empty(); // Limpiar el tbody antes de regenerar
+        tbody.empty(); 
 
-        // Recorrer los registros y crear las filas
         registros.forEach(registro => {
             const newRow = `<tr id="row-${registro.id}">
                                 <td>${registro.nombre}</td>
@@ -124,12 +123,12 @@
     }
 
     function eliminarFila(id) {
-        // Encontrar el índice del registro a eliminar
+     
         const index = registros.findIndex(registro => registro.id === id);
         if (index !== -1) {
-            // Eliminar el registro del array
+        
             registros.splice(index, 1);
-            generaTabla(); // Regenerar la tabla
+            generaTabla(); 
         }
     }
 </script>
