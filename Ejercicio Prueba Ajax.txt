@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palabras y Vocales</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Palabras y Vocales</h1>
+    <h2>Nombre y Apellidos</h2>
+    
+    <label for="cantidad">Cantidad de palabras:</label>
+    <input type="number" id="cantidad" min="1" value="1">
+    <button onclick="obtenerPalabras()">Nueva palabra</button>
+    
+    <h2>Lista de palabras</h2>
+    <ul id="wordList"></ul>
+    
+    <h2>Estadísticas</h2>
+    <div id="stats">
+        <p>A: <span id="countA">0</span></p>
+        <p>E: <span id="countE">0</span></p>
+        <p>I: <span id="countI">0</span></p>
+        <p>O: <span id="countO">0</span></p>
+        <p>U: <span id="countU">0</span></p>
+        <p>Consonantes: <span id="countConsonantes">0</span></p>
+    </div>
+    
+    <h2>Palabra más larga: <span id="longestWord">-</span></h2>
+    <h2>Palabra más corta: <span id="shortestWord">-</span></h2>
+    
+    <script>
+        let words = [];
+        let stats = { A: 0, E: 0, I: 0, O: 0, U: 0, consonantes: 0 };
+        
+        async function obtenerPalabras() {
+            const cantidad = document.getElementById('cantidad').value;
+            const url = `https://clientes.api.greenborn.com.ar/public-random-word?c=${cantidad}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                words = [...words, ...data].sort();
+                actualizarLista();
+                actualizarEstadisticas();
+            } catch (error) {
+                console.error("Error obteniendo palabras:", error);
+            }
+        }
+        
+        function actualizarLista() {
+            const wordList = document.getElementById('wordList');
+            wordList.innerHTML = '';
+            words.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                wordList.appendChild(li);
+            });
+        }
+        
+        function actualizarEstadisticas() {
+            stats = { A: 0, E: 0, I: 0, O: 0, U: 0, consonantes: 0 };
+            let longest = "";
+            let shortest = words.length > 0 ? words[0] : "";
+            
+            words.forEach(word => {
+                const firstLetter = word.charAt(0).toUpperCase();
+                if (stats.hasOwnProperty(firstLetter)) {
+                    stats[firstLetter]++;
+                } else {
+                    stats.consonantes++;
+                }
+                if (word.length > longest.length) longest = word;
+                if (word.length < shortest.length) shortest = word;
+            });
+            
+            document.getElementById('countA').textContent = stats.A;
+            document.getElementById('countE').textContent = stats.E;
+            document.getElementById('countI').textContent = stats.I;
+            document.getElementById('countO').textContent = stats.O;
+            document.getElementById('countU').textContent = stats.U;
+            document.getElementById('countConsonantes').textContent = stats.consonantes;
+            document.getElementById('longestWord').textContent = longest;
+            document.getElementById('shortestWord').textContent = shortest;
+        }
+    </script>
+</body>
+</html>

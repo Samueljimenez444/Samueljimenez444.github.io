@@ -18,14 +18,17 @@
     </style>
 </head>
 <body>
-    <h1>Información del Equipo de la Premier League</h1>
+    <h1>Información de un Equipo</h1>
     <label for="team-select">Selecciona un equipo:</label>
-    <select id="team-select" multiple>
+    <select id="team-select" >
         <option value="">--Selecciona un equipo--</option>
         <option value="Chelsea">Chelsea</option>
         <option value="Arsenal">Arsenal</option>
         <option value="Manchester United">Manchester United</option>
         <option value="Manchester City">Manchester City</option>
+        <option value="Fc Barcelona">FC Barcelona</option>
+        <option value="Real Madrid">Real Madrid</option>
+
         
     </select>
 
@@ -46,10 +49,10 @@
                             <p><strong>Año de Fundación:</strong> ${team.intFormedYear}</p>
                             <p><strong>Estadio:</strong> ${team.strStadium}</p>
                             <p><strong>Descripción:</strong> ${team.strDescriptionES || team.strDescriptionEN}</p>
-                            
+                            <p><strong>Pais de Origen:</strong> ${team.strCountry}</p>
                         `;
                     })
-                
+                  console.log(`https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${teamName}`)
             }
         });
 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        h2 { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Producto</h1>
+    <form id="productForm">
+        <label>Descripción: <input type="text" id="descripcion" required></label><br>
+        <label>ID Proveedor: <input type="number" id="idProveedor" required></label><br>
+        <label>Precio: <input type="number" id="precio" step="0.01" required></label><br>
+        <button type="submit">Enviar</button>
+    </form>
+    
+    <h2 id="error"></h2>
+    
+    <h1>Lista de Productos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>ID Proveedor</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody"></tbody>
+    </table>
+    
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const descripcion = document.getElementById('descripcion').value;
+            const idProveedor = document.getElementById('idProveedor').value;
+            const precio = document.getElementById('precio').value;
+            
+            fetch('https://lm.iesnervion.es/reto4.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ descripcion, idProveedor, precio })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('error').textContent = data.error;
+                document.getElementById('error').style.fontWeight = 'bold';
+                if (data.error === null) {
+                    document.getElementById('error').textContent = 'Todo fue OK';
+                    document.getElementById('error').style.color = 'green';
+                }
+                
+                const tbody = document.getElementById('productTableBody');
+                tbody.innerHTML = '';
+                data.lista.forEach(producto => {
+                    const row = `<tr>
+                        <td>${producto.id}</td>
+                        <td>${producto.descripcion}</td>
+                        <td>${producto.idProveedor}</td>
+                        <td>${producto.precio}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                document.getElementById('error').textContent = 'Error en la conexión';
+                document.getElementById('error').style.color = 'red';
+            });
+        });
+    </script>
+</body>
+</html>

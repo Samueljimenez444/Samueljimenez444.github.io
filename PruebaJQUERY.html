@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+</head>
+<style>
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td{
+        border: 1px solid black;
+    }
+    th, td{
+        padding: 8px;
+        text-align: left;
+    }
+    </style>
+<body>
+    <h1>Prueba JQUERY</h1>
+    <form id="formulario">
+        <label for="nombre">Nombre: </label>
+        <input type="text" id="nombre" >
+        <label for="edad">Edad: </label>
+        <input type="number" id="edad" >
+        <label for="Ciudad">Ciudad</label>
+        <input type="text" id="ciudad" >
+        <button type="submit" id="boton">Añadir</button>
+       </form> 
+    <br>
+       <table id="tabla"> 
+
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+                <th>Acción</th>
+
+       </table>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+ $(document).ready(function()) {
+    event.onclick();
+    const nombre=$('$nombre').val();
+    const edad=$('$edad').val();
+    const ciudad=$('$ciudad').val();
+    if(nombre=""){
+        alert("Rellena el campo cojone")
+    }
+    if(ciudad=""){
+        alert("Rellena el campo cojone")
+    }
+    if(edad=""){
+        alert("Rellena el campo cojone")
+    }
+    const newRow= '<tr id="1" onclick="eliminarFilas(1)">'
+        <td>${nombre}</td>
+        <td>${edad}</td>   
+        <td>${ciudad}</td>
+        '</tr>';
+ }
+</script>
+</html>

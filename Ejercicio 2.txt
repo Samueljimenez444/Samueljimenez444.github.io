@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Serialización/Deserialización</title>
+    <script>
+        function serializar() {
+            const persona = {
+                nombre: document.getElementById("inputNombre").value,
+                apellidos: document.getElementById("inputApellidos").value,
+                edad: document.getElementById("inputEdad").value,
+                ciudad: document.getElementById("inputCiudad").value
+            };
+            const json = JSON.stringify(persona);
+            document.getElementById("jsonOutput").textContent = json;
+            console.log("JSON Serializado:", json);
+        }
+
+
+        function deserializar() {
+            const json = document.getElementById("jsonOutput").textContent;
+            if (json) {
+                const objeto = JSON.parse(json);
+                const nuevaFila = crearFila(objeto);
+                document.getElementById("tablaBody").innerHTML += nuevaFila;
+                console.log("Objeto Deserializado y agregado a la tabla:", objeto);
+            } else {
+                alert("No hay JSON para deserializar");
+            }
+        }
+
+
+        function crearFila(objeto) {
+            return `<tr>
+                        <td>${objeto.nombre}</td>
+                        <td>${objeto.apellidos}</td>
+                        <td>${objeto.edad}</td>
+                        <td>${objeto.ciudad}</td>
+                    </tr>`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Conversión entre Objeto y JSON</h1>
+    <form onsubmit="event.preventDefault(); serializar();">
+        <label>Nombre: <input type="text" id="inputNombre" required></label>
+        <label>Apellidos: <input type="text" id="inputApellidos" required></label>
+        <label>Edad: <input type="number" id="inputEdad" required></label>
+        <label>Ciudad: <input type="text" id="inputCiudad" required></label>
+        <button type="submit">Serializar</button>
+    </form>
+    <button onclick="deserializar()">Deserializar y Agregar a la Tabla</button>
+    <h2>JSON:</h2>
+    <p id="jsonOutput" style="white-space: pre-wrap; background: #f4f4f4; padding: 10px;"></p>
+    <h2>Datos en Tabla:</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+            </tr>
+        </thead>
+        <tbody id="tablaBody">
+        </tbody>
+    </table>
+</body>
+</html>

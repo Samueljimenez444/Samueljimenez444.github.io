@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados de la Suerte</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 13px;
+            margin: auto;
+        }
+
+        h2 {
+            color: gold;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: red;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bienvenido a el casino de los Dados de la Suerte</h1>
+    <h1>Dados de la Suerte</h1>
+    <h2>Creador: Samuel Jimenez</h2>
+
+    <!-- Formulario que rellenara el usuario con sus datos y la contraseña  -->
+    <form id="juegoDados">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" required>
+
+        <label for="contraseña">Contraseña:</label>
+        <input type="contraseña" id="contraseña" required>
+
+        <label for="apuesta">Apuesta (Elige solo numeros entre 2-12 estando estos dos incluidos):</label>
+        <input type="number" id="apuesta" min="2" max="12" required>
+
+        <input type="hidden" id="id">
+
+        <button type="submit" onclick="subirDatos()">Apostar</button>
+    </form>
+    <!--los dados y sus distintos numero junto al resultado de la suma de los dos dados-->
+    <h1 id="dado1"></h1>
+    <h1 id="dado2"></h1>
+    <h2 id="resultado"></h2>
+    <!--Lista de ganadores de las apuestas-->
+    <h1>Lista de Ganadores</h1>
+    <ol id="listaGanadores"></ol>
+
+    <script>
+        //Obtenemos el elemento juegoDados por su id y usamos submit
+        document.getElementById('juegoDados').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            //Obtenemos los valores en base al envio realizado en el formulario oor nuestro usuario
+            const nombre = document.getElementById('nombre').value;
+            const apellidos = document.getElementById('apellidos').value;
+            const contraseña = document.getElementById('contraseña').value;
+            const apuesta = document.getElementById('apuesta').value;
+            const id = document.getElementById('id').value || 'TAPETE';
+
+            //Usamos append para añadir los datos
+            const data = new URLSearchParams();
+            data.append('nombre', nombre);
+            data.append('apellidos', apellidos);
+            data.append('contraseña', contraseña);
+            data.append('apuesta', apuesta);
+            data.append('id', id);
+
+            //Usamos fetch para enviar la peticion al servidor usando el metodo post
+
+            $('button').click(function () {
+
+                function subirDatos() {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", "https://lm.iesnervion.es/dados.php");
+                    xhr.responseType = "json";
+                    xhr.onload = function () {
+                        if (xhr.status != 200) {
+                            console.error(`Error: ${xhr.status}: ${xhr.statusText}`);
+                        } else {
+                            console.log(xhr.response);
+                        }
+                    };
+                    xhr.send(data);
+
+
+                }
+            });
+            // Mostrar los resultados de la apuesta 
+            document.getElementById('dado1').textContent = `Dado 1: ${result.dado1}`;
+            document.getElementById('dado2').textContent = `Dado 2: ${result.dado2}`;
+            document.getElementById('resultado').textContent = result.mensaje;
+
+            // Si se devuelve un ID actualiza en el formulario
+            if (result.id) {
+                document.getElementById('id').value = result.id;
+            }
+
+            // Actualizar la lista de ganadores
+            updateWinners(result.lista_ganadores);
+
+        });
+
+        function updateWinners(lista) {
+            const listaGanadores = document.getElementById('listaGanadores');
+            listaGanadores.innerHTML = '';
+            lista.forEach(ganador => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${ganador.nombre} - ${ganador.puntaje}`;
+                listaGanadores.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+
+</html>

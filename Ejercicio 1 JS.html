@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Serialización/Deserialización</title>
+    <script>
+        function serializar() {
+            const persona = {
+                nombre: "Juan",
+                apellidos: "Pérez Gómez",
+                edad: 30,
+                ciudad: "Madrid"
+            };
+            const json = JSON.stringify(persona);
+            document.getElementById("jsonOutput").textContent = json;
+            console.log("JSON Serializado:", json);
+        }
+
+
+        function deserializar() {
+            const json = document.getElementById("jsonOutput").textContent;
+            if (json) {
+                const objeto = JSON.parse(json);
+                document.getElementById("objectOutput").textContent = `Nombre: ${objeto.nombre}, Apellidos: ${objeto.apellidos}, Edad: ${objeto.edad}, Ciudad: ${objeto.ciudad}`;
+                console.log("Objeto Deserializado:", objeto);
+            } else {
+                alert("No hay JSON para deserializar");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Conversión entre Objeto y JSON</h1>
+    <button onclick="serializar()">Serializar</button>
+    <button onclick="deserializar()">Deserializar</button>
+    <h2>JSON:</h2>
+    <p id="jsonOutput" style="white-space: pre-wrap; background: #f4f4f4; padding: 10px;"></p>
+    <h2>Objeto:</h2>
+    <p id="objectOutput" style="white-space: pre-wrap; background: #e4e4e4; padding: 10px;"></p>
+</body>
+</html>

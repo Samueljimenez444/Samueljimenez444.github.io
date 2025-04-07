@@ -1,11 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dados de la Suerte</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 13px;
+            margin: auto;
+        }
+        h2 {
+            color: gold;
+            font-weight: bold;
+        }
+        h1{
+            color: red;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <h1>Bienvenido a el casino de los Dados de la Suerte</h1>
+    <h1>Dados de la Suerte</h1>
+    <h2>Creador: Samuel Jimenez</h2>
     
+    <!-- Formulario que rellenara el usuario con sus datos y la contraseña  -->
+    <form id="juegoDados">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" required>
+        
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" required>
+        
+        <label for="apuesta">Apuesta (Elige solo numeros entre 2-12 estando estos dos incluidos):</label>
+        <input type="number" id="apuesta" min="2" max="12" required>
+        
+        <input type="hidden" id="id">
+        
+        <button type="submit">Apostar</button>
+    </form>
+    <!--los dados y sus distintos numero junto al resultado de la suma de los dos dados-->
+    <h1 id="dado1"></h1>
+    <h1 id="dado2"></h1>
+    <h2 id="resultado"></h2>
+    <!--Lista de ganadores de las apuestas-->
+    <h1>Lista de Ganadores</h1>
+    <ol id="listaGanadores"></ol>
+    
+    <script>
+        $(document).ready(function() {
+            // Obtener datos usando GET
+            $.ajax({
+                url: 'https://lm.iesnervion.es/dados.php',
+                method: 'GET',
+                success: function(response) {
+                    if (response.lista_ganadores) {
+                        if (Array.isArray(response.lista_ganadores)) {
+                            if (Array.isArray(response.lista_ganadores)) {
+                                updateWinners(response.lista_ganadores);
+                            } else {
+                                $('#resultado').text('No hay ganadores en la lista');
+                            }
+                        } else {
+                            $('#resultado').text('No hay ganadores en la lista');
+                        }
+                    } else {
+                        $('#resultado').text('No hay ganadores en la lista');
+                    }
+                },
+                error: function() {
+                    $('#resultado').text('Error al obtener la lista de ganadores');
+                }
+            });
+
+            // Manejar el envío del formulario usando POST
+            $('#juegoDados').on('submit', function(event) {
+                event.preventDefault();
+                
+                const data = {
+                    nombre: $('#nombre').val(),
+                    apellidos: $('#apellidos').val(),
+                    contraseña: $('#contraseña').val(),
+                    apuesta: $('#apuesta').val(),
+                    id: $('#id').val() || 'TAPETE'
+                };
+                
+                $.ajax({
+                    url: 'https://lm.iesnervion.es/dados.php',
+                    method: 'POST',
+                    data: data,
+                    success: function(response) {
+                        $('#dado1').text(`Dado 1: ${response.dado1}`);
+                        $('#dado2').text(`Dado 2: ${response.dado2}`);
+                        $('#resultado').text(response.mensaje);
+                        
+                        if (response.id) {
+                            $('#id').val(response.id);
+                        }
+                        
+                        updateWinners(response.lista_ganadores);
+                    },
+                    error: function() {
+                        $('#resultado').text('Error');
+                    }
+                });
+            });
+        });
+
+        function updateWinners(lista) {
+            const listaGanadores = $('#listaGanadores');
+            listaGanadores.empty();
+            lista.forEach(ganador => {
+                const listItem = $('<li></li>').text(`${ganador.nombre} - ${ganador.puntaje}`);
+                listaGanadores.append(listItem);
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 4</title>
+    <style>
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        td, th{
+            border: 1px solid;
+            padding: 10px;
+            text-align: left;
+        }
+        th{
+            background-color: #f2f2f2;
+        }
+        h1{
+            color: #1E90FF; /* Azul Dodger */
+            background: linear-gradient(to right, #00BFFF, #1E90FF, #87CEFA); /* Gradiente de colores azulados */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2{
+            color: red;
+            font-weight: bold;
+        }
+        form{
+            margin-bottom: 20px;
+        }
+        button:hover{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registro de Productos</h1>
+    <form id="productos">
+        <label>Descripcion<input type='text' id='descripcion' required></label>
+        <label>ID Proveedor<input type='text' id='idProveedor' required></label>
+        <label>Precio<input type='number' id="precio" required></label>
+        <button type="submit">Enviar Informacion</button>
+    </form>
+    <button id="obtenerInformacion">Obtener Informacion</button>
+    <h2 id="errores"></h2>
+    <table> 
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripcion</th>
+                <th>ID Proveedor</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody id="tablaProductos"></tbody>
+    </table>
+    <script>
+        document.getElementById("productos").addEventListener('submit', function(event){
+            event.preventDefault();
+            const descripcion = document.getElementById('descripcion').value;
+            const idProveedor = document.getElementById('idProveedor').value;
+            const precio = document.getElementById('precio').value;
+            const formulario = new FormData();
+            formulario.append("descripcion", descripcion);
+            formulario.append("idProveedor", idProveedor);
+            formulario.append("precio", precio);
+
+            fetch("https://lm.iesnervion.es/reto4.php", {
+                method: "POST",
+                body: formulario
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById("errores").textContent = data.error;
+                document.getElementById("errores").style.color = data.error ? "red" : "green";
+                if (!data.error) {
+                    actualizarTabla(data.lista);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("errores").textContent = "Error en la comunicación con el servidor.";
+                document.getElementById("errores").style.color = "red";
+            });
+        });
+
+        document.getElementById("obtenerInformacion").addEventListener('click', function(){
+            fetch("https://lm.iesnervion.es/reto4.php", {
+                method: "GET"
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (!data.error) {
+                    actualizarTabla(data.lista);
+                } else {
+                    document.getElementById("errores").textContent = data.error;
+                    document.getElementById("errores").style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById("errores").textContent = "Error en la comunicación con el servidor.";
+                document.getElementById("errores").style.color = "red";
+            });
+        });
+
+        function actualizarTabla(lista) {
+            const tablaProductos = document.getElementById("tablaProductos");
+            tablaProductos.innerHTML = "";
+            lista.forEach(producto => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${producto.id}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>${producto.idProveedor}</td>
+                    <td>${producto.precio}</td>
+                `;
+                tablaProductos.appendChild(fila);
+            });
+        }
+    </script>
+</body>
+</html>

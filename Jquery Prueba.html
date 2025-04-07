@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados de la Suerte</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            margin: auto;
+        }
+        h2 {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dados de la Suerte</h1>
+    <h2>Nombre y Apellidos</h2>
+    
+    <!-- Formulario para enviar datos al servidor -->
+    <form id="gameForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" required>
+        
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required>
+        
+        <label for="apuesta">Apuesta (2-12):</label>
+        <input type="number" id="apuesta" min="2" max="12" required>
+        
+        <input type="hidden" id="id">
+        
+        <button type="submit">Jugar</button>
+    </form>
+    
+    <h1 id="dado1"></h1>
+    <h1 id="dado2"></h1>
+    <h2 id="resultado"></h2>
+    
+    <h1>Lista de Ganadores</h1>
+    <ol id="winnerList"></ol>
+    
+    <script>
+        document.getElementById('gameForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // Obtener valores del formulario
+            const nombre = document.getElementById('nombre').value;
+            const apellidos = document.getElementById('apellidos').value;
+            const password = document.getElementById('password').value;
+            const apuesta = document.getElementById('apuesta').value;
+            const id = document.getElementById('id').value || 'TAPETE';
+            
+            const data = new URLSearchParams();
+            data.append('nombre', nombre);
+            data.append('apellidos', apellidos);
+            data.append('password', password);
+            data.append('apuesta', apuesta);
+            data.append('id', id);
+            
+            try {
+                const response = await fetch('https://lm.iesnervion.es/dados.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: data
+                });
+                const result = await response.json();
+                
+                // Mostrar los resultados de la partida
+                document.getElementById('dado1').textContent = `Dado 1: ${result.dado1}`;
+                document.getElementById('dado2').textContent = `Dado 2: ${result.dado2}`;
+                document.getElementById('resultado').textContent = result.mensaje;
+                
+                // Si se devuelve un ID, actualizarlo en el formulario
+                if (result.id) {
+                    document.getElementById('id').value = result.id;
+                }
+                
+                // Actualizar la lista de ganadores
+                updateWinners(result.lista_ganadores);
+            } catch (error) {
+                document.getElementById('resultado').textContent = 'Error en la comunicación con el servidor';
+            }
+        });
+        
+        function updateWinners(lista) {
+            const winnerList = document.getElementById('winnerList');
+            winnerList.innerHTML = '';
+            lista.forEach(ganador => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${ganador.nombre} - ${ganador.puntaje}`;
+                winnerList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>

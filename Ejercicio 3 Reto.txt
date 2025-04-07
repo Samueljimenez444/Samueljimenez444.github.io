@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Serialización/Deserialización</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let personas = [];
+
+
+        // Limitar selección de hobbies a un máximo de 3
+        $(document).ready(function() {
+            $("input[name='hobbies']").on('change', function() {
+                const selectedHobbies = $("input[name='hobbies']:checked").length;
+
+
+                // Si ya hay tres hobbies seleccionados, desmarcar el nuevo
+                if (selectedHobbies > 3) {
+                    alert("Solo puedes seleccionar un máximo de tres hobbies.");
+                    $(this).prop('checked', false);
+                }
+            });
+        });
+
+
+        function serializar() {
+            const nombre = document.getElementById("inputNombre").value;
+            const apellidos = document.getElementById("inputApellidos").value;
+            const edad = document.getElementById("inputEdad").value;
+            const ciudad = document.getElementById("inputCiudad").value;
+           
+            const hobbies = Array.from(document.querySelectorAll('input[name="hobbies"]:checked'))
+                                .map(hobby => hobby.value);
+
+
+            if (!nombre) return alert("El campo Nombre es obligatorio");
+            if (!apellidos) return alert("El campo Apellidos es obligatorio");
+            if (!edad) return alert("El campo Edad es obligatorio");
+            if (!ciudad) return alert("El campo Ciudad es obligatorio");
+            if (hobbies.length === 0) return alert("Debe seleccionar al menos un hobby");
+
+
+            const persona = { id: new Date().getTime(), nombre, apellidos, edad: parseInt(edad), ciudad, hobbies };
+            personas.push(persona);
+            actualizarTabla();
+        }
+
+
+        function actualizarTabla() {
+            const json = JSON.stringify(personas);
+            document.getElementById("jsonOutput").textContent = json;
+            generaTabla(json);
+        }
+
+
+        function generaTabla(json) {
+            const datos = JSON.parse(json);
+            const tbody = document.getElementById("tablaBody");
+            tbody.innerHTML = "";
+            datos.forEach(persona => {
+                tbody.innerHTML += generaTR(persona);
+            });
+            actualizarEstadisticas();
+        }
+
+
+        function generaTR(persona) {
+            return `<tr id="fila-${persona.id}" onclick="eliminarFila(${persona.id})">
+                        <td>${persona.nombre}</td>
+                        <td>${persona.apellidos}</td>
+                        <td>${persona.edad}</td>
+                        <td>${persona.ciudad}</td>
+                        <td>${persona.hobbies.join(", ")}</td>
+                    </tr>`;
+        }
+
+
+        function eliminarFila(id) {
+            document.getElementById(`fila-${id}`).remove();
+            const index = personas.findIndex(p => p.id === id);
+            if (index !== -1) {
+                personas.splice(index, 1);
+            }
+            actualizarTabla();
+        }
+
+
+        function actualizarEstadisticas() {
+            if (personas.length === 0) {
+                document.getElementById("stats").textContent = "No hay datos disponibles";
+                return;
+            }
+            const edades = personas.map(p => p.edad);
+            const suma = edades.reduce((a, b) => a + b, 0);
+            const media = (suma / edades.length).toFixed(2);
+            const max = Math.max(...edades);
+            const min = Math.min(...edades);
+            document.getElementById("stats").textContent = `Suma: ${suma}, Media: ${media}, Máximo: ${max}, Mínimo: ${min}`;
+            console.log("Estadísticas - Suma:", suma, "Media:", media, "Máximo:", max, "Mínimo:", min);
+        }
+    </script>
+</head>
+<body>
+    <h1>Conversión entre Objeto y JSON</h1>
+    <form onsubmit="event.preventDefault(); serializar();">
+        <label>Nombre: <input type="text" id="inputNombre"></label>
+        <label>Apellidos: <input type="text" id="inputApellidos"></label>
+        <label>Edad: <input type="number" id="inputEdad"></label>
+        <label>Ciudad: <input type="text" id="inputCiudad"></label>
+        <fieldset>
+            <legend>Hobbies</legend>
+            <label><input type="checkbox" name="hobbies" value="Deporte"> Deporte</label>
+            <label><input type="checkbox" name="hobbies" value="Lectura"> Lectura</label>
+            <label><input type="checkbox" name="hobbies" value="Música"> Música</label>
+            <label><input type="checkbox" name="hobbies" value="Juegos"> Juegos</label>
+            <label><input type="checkbox" name="hobbies" value="Cine"> Cine</label>
+            <label><input type="checkbox" name="hobbies" value="Teatro"> Teatro</label>
+            <label><input type="checkbox" name="hobbies" value="Coleccionismo"> Coleccionismo</label>
+            <label><input type="checkbox" name="hobbies" value="Bricolaje"> Bricolaje</label>
+            <label><input type="checkbox" name="hobbies" value="Cosplay"> Cosplay</label>
+        </fieldset>
+        <button type="submit">Añadir</button>
+    </form>
+    <h2>JSON:</h2>
+    <p id="jsonOutput" style="white-space: pre-wrap; background: #f4f4f4; padding: 10px;"></p>
+    <h2>Datos en Tabla:</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+                <th>Hobbies</th>
+            </tr>
+        </thead>
+        <tbody id="tablaBody">
+        </tbody>
+    </table>
+    <h2>Estadísticas de Edades:</h2>
+    <p id="stats">No hay datos disponibles</p>
+</body>
+</html>
